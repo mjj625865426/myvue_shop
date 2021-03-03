@@ -66,6 +66,7 @@
                 type="warning"
                 icon="el-icon-setting"
                 circle
+                @click="setusers(scope.row)"
               ></el-button
             ></el-tooltip>
           </template>
@@ -144,6 +145,31 @@
         <el-button type="primary" @click="edituserlist">确 定</el-button>
       </span>
     </el-dialog>
+    <!-- 修改用户角色按钮 -->
+    <el-dialog
+      title="修改用户角色"
+      :visible.sync="setuserdialogVisible"
+      width="30%"
+      @close="guangbi"
+    >
+      <div>当前的用户:{{ userinfo.username }}</div>
+      <div>当前的角色:{{ userinfo.role_name }}</div>
+      <div>
+        分配新角色:<el-select v-model="userinforule" placeholder="请选择">
+          <el-option
+            v-for="item in getuserinfo"
+            :key="item.id"
+            :label="item.roleName"
+            :value="item.id"
+          >
+          </el-option>
+        </el-select>
+      </div>
+      <span slot="footer" class="dialog-footer">
+        <el-button @click="setuserdialogVisible = false">取 消</el-button>
+        <el-button type="primary" @click="senduserrole">确 定</el-button>
+      </span>
+    </el-dialog>
   </div>
 </template>
 <script>
@@ -215,7 +241,15 @@ export default {
           { required: true, message: '请输入手机号', trigger: 'blur' },
           { validator: checkMoblie, message: '手机号码不正确，请重新输入', trigger: 'blur' }
         ]
-      }
+      },
+      // 修改角色 获取到的单行信息
+      userinfo: {},
+      // 控制修改用户角色是否弹出
+      setuserdialogVisible: false,
+      // 用户角色选择好的
+      userinforule: '',
+      // 所有角色信息
+      getuserinfo: []
     }
   },
   created () {
@@ -321,6 +355,33 @@ export default {
       if (res.meta.status !== 200) return this.$message.error('已删除!')
       this.getUserlist()
       this.$message.success('确认删除!')
+    },
+    // 点击修改角色
+    async setusers (userinfo) {
+      // console.log(userinfo)
+      this.userinfo = userinfo
+      // 获取所有角色信息
+      const { data: res } = await this.$http.get('roles')
+      this.getuserinfo = res.data
+      this.setuserdialogVisible = true
+    },
+    // 点击确定修改角色
+    async senduserrole () {
+      if (!this.userinforule) {
+        return this.$message.error('请选择角色')
+      }
+      // 发送请求
+      const { data: res } = await this.$http.put(`users/${this.userinfo.id}/role`, { rid: this.userinforule })
+      // console.log(res);
+      if (res.meta.status !== 200) return this.$message.error('更改角色失败!')
+      this.$message.success('更改角色成功!')
+      this.getUserlist()
+      this.setuserdialogVisible = false
+    },
+    // 关闭弹出层
+    guangbi () {
+      this.userinforule = ''
+      this.userinfo = {}
     }
   }
 }

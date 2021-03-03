@@ -5,12 +5,16 @@ import Home from '../components/Home.vue'
 import Welcome from '../components/Welcome.vue'
 // 导入user用户列表
 import Users from '../components/user/Users.vue'
+// 导入Rights
+import Rights from '../components/power/Rights.vue'
+// 导入roles
+import Roles from '../components/power/Roles.vue'
 Vue.use(VueRouter)
 
 const routes = [
   { path: '/', redirect: '/login' },
   { path: '/login', component: Login },
-  { path: '/home', component: Home, redirect: '/welcome', children: [{ path: '/welcome', component: Welcome }, { path: '/users', component: Users }] }
+  { path: '/home', component: Home, redirect: '/welcome', children: [{ path: '/welcome', component: Welcome }, { path: '/roles', component: Roles }, { path: '/rights', component: Rights }, { path: '/users', component: Users }] }
 ]
 
 const router = new VueRouter({
