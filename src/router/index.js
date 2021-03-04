@@ -9,12 +9,14 @@ import Users from '../components/user/Users.vue'
 import Rights from '../components/power/Rights.vue'
 // 导入roles
 import Roles from '../components/power/Roles.vue'
+// 导入Cate
+import Cate from '../components/goods/Cate.vue'
 Vue.use(VueRouter)
 
 const routes = [
   { path: '/', redirect: '/login' },
   { path: '/login', component: Login },
-  { path: '/home', component: Home, redirect: '/welcome', children: [{ path: '/welcome', component: Welcome }, { path: '/roles', component: Roles }, { path: '/rights', component: Rights }, { path: '/users', component: Users }] }
+  { path: '/home', component: Home, redirect: '/welcome', children: [{ path: '/welcome', component: Welcome }, { path: '/roles', component: Roles }, { path: '/rights', component: Rights }, { path: '/users', component: Users }, { path: '/categories', component: Cate }] }
 ]
 
 const router = new VueRouter({
