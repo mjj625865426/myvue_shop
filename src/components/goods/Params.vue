@@ -299,7 +299,7 @@ export default {
       // 遍历数组中的attr_vals
       // console.log(res.data)
       res.data.forEach(item => {
-        item.attr_vals = item.attr_vals ? item.attr_vals.split(',') : []
+        item.attr_vals = item.attr_vals ? item.attr_vals.split(' ') : []
         //  添加控制输入框是否显示
         item.inputVisible = false
         //  输入的值
@@ -396,7 +396,7 @@ export default {
     },
     // 抽离修改参数项
     async editparamstab (row) {
-      const { data: res } = await this.$http.put(`categories/${this.cateId}/attributes/${row.attr_id}`, { attr_name: row.attr_name, attr_sel: row.attr_sel, attr_vals: row.attr_vals.join(',') })
+      const { data: res } = await this.$http.put(`categories/${this.cateId}/attributes/${row.attr_id}`, { attr_name: row.attr_name, attr_sel: row.attr_sel, attr_vals: row.attr_vals.join(' ') })
       console.log(res)
       if (res.meta.status !== 200) return this.$message.error('添加标签失败！')
       this.$message.success('修改参数项成功！')
