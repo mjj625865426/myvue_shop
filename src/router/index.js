@@ -17,12 +17,14 @@ import Params from '../components/goods/Params.vue'
 import List from '../components/goods/List.vue'
 // 导入Add
 import Add from '../components/goods/Add.vue'
+// 导入Order
+import Order from '../components/order/Order.vue'
 Vue.use(VueRouter)
 
 const routes = [
   { path: '/', redirect: '/login' },
   { path: '/login', component: Login },
-  { path: '/home', component: Home, redirect: '/welcome', children: [{ path: '/welcome', component: Welcome }, { path: '/goods', component: List }, { path: '/roles', component: Roles }, { path: '/rights', component: Rights }, { path: '/users', component: Users }, { path: '/categories', component: Cate }, { path: '/params', component: Params }, { path: '/goods/add', component: Add }] }
+  { path: '/home', component: Home, redirect: '/welcome', children: [{ path: '/welcome', component: Welcome }, { path: '/goods', component: List }, { path: '/roles', component: Roles }, { path: '/rights', component: Rights }, { path: '/users', component: Users }, { path: '/categories', component: Cate }, { path: '/params', component: Params }, { path: '/goods/add', component: Add }, { path: '/orders', component: Order }] }
 ]
 
 const router = new VueRouter({
